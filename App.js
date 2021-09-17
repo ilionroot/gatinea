@@ -3,7 +3,11 @@ import Splash from "./src/pages/Splash";
 
 import { setCustomText } from "react-native-global-props";
 
-import { useFonts, Ubuntu_500Medium } from "@expo-google-fonts/ubuntu";
+import {
+  useFonts,
+  Ubuntu_500Medium,
+  Ubuntu_700Bold,
+} from "@expo-google-fonts/ubuntu";
 
 import Router from "./router";
 
@@ -12,6 +16,7 @@ export default function App() {
 
   let [fontsLoaded] = useFonts({
     Ubuntu_500Medium,
+    Ubuntu_700Bold,
   });
 
   if (isSplashing && fontsLoaded) {

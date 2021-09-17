@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import {
   View,
   Text,
@@ -13,12 +13,16 @@ import { createStackNavigator } from "@react-navigation/stack";
 import { AntDesign } from "@expo/vector-icons";
 import LottieView from "lottie-react-native";
 
+import Declaration from "./src/pages/Declaration";
+import Proceed from "./src/pages/Proceed";
+
 import { styles } from "./styles";
 
 const RootStack = createStackNavigator();
 
 const Home = ({ navigation }) => {
   const [blinkingTextAnimation] = useState(new Animated.Value(0));
+  let startButtonAnimationRef = useRef();
 
   useEffect(() => {
     let toChangeValue = 1;
@@ -49,12 +53,27 @@ const Home = ({ navigation }) => {
       />
       <TouchableOpacity
         onPress={() => {
-          navigation.navigate("Declaration");
+          startButtonAnimationRef.current.reset();
+          startButtonAnimationRef.current.play();
+          setTimeout(() => {
+            navigation.navigate("Declaration");
+          }, 750);
         }}
         style={styles.button}
         activeOpacity={0.5}
       >
         <AntDesign name="rightcircle" size={48} color="pink" />
+        <LottieView
+          ref={startButtonAnimationRef}
+          loop={false}
+          style={{
+            position: "absolute",
+            width: 300,
+            height: 300,
+            // backgroundColor: "red",
+          }}
+          source={require("./assets/2023-particle-explosion.json")}
+        />
       </TouchableOpacity>
       <Animated.Text
         style={{
@@ -84,20 +103,18 @@ const Home = ({ navigation }) => {
   );
 };
 
-const Declaration = () => {
-  return <View></View>;
-};
-
 const RootRoutes = () => {
   return (
     <RootStack.Navigator
       screenOptions={{
         header: () => {},
+        gestureEnabled: false,
       }}
       initialRouteName="Home"
     >
       <RootStack.Screen name="Home" component={Home} />
       <RootStack.Screen name="Declaration" component={Declaration} />
+      <RootStack.Screen name="Proceed" component={Proceed} />
     </RootStack.Navigator>
   );
 };
