@@ -6,6 +6,7 @@ import {
   SafeAreaView,
   TouchableOpacity,
   Animated,
+  Vibration,
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { Feather } from "@expo/vector-icons";
@@ -28,6 +29,8 @@ const Proceed = ({ navigation }) => {
 
   function accept() {
     setMatrixStateAnimation(true);
+
+    Vibration.vibrate(1000);
 
     setTimeout(() => {
       matrixAnimation.current.pause();
@@ -63,6 +66,7 @@ const Proceed = ({ navigation }) => {
   useEffect(() => {
     setTimeout(() => {
       initialAnimation.current?.pause();
+      setInitialStateAnimation(false);
     }, 3500);
   }, []);
 
@@ -173,15 +177,12 @@ const Proceed = ({ navigation }) => {
             ref={initialAnimation}
             style={{
               width: "100%",
-              height: "100%",
+              height: "90%",
               position: "absolute",
               backgroundColor: "rgba(255,255,255,0.8)",
             }}
             autoPlay
             loop
-            onAnimationFinish={() => {
-              setInitialStateAnimation(false);
-            }}
             source={require("../../../assets/37211-google-icons-forms.json")}
           />
         )}
@@ -192,7 +193,7 @@ const Proceed = ({ navigation }) => {
             ref={matrixAnimation}
             style={{
               position: "absolute",
-              height: "100%",
+              flex: 1,
               top: 0,
               left: 0,
               backgroundColor: "rgba(0,0,0,0.75)",

@@ -19,6 +19,7 @@ const Splash = ({ setIsSplashing }) => {
 
     setTimeout(() => {
       animation.current.pause();
+      setIsSplashing(false);
     }, 5000);
   }, []);
 
@@ -30,9 +31,6 @@ const Splash = ({ setIsSplashing }) => {
         style={{
           width: 125,
           height: 125,
-        }}
-        onAnimationFinish={() => {
-          setIsSplashing(false);
         }}
         source={require("../../../assets/70305-love-emoji.json")}
       />

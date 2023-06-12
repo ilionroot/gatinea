@@ -1,5 +1,11 @@
 import React, { useState, useEffect, useRef } from "react";
-import { View, Text, Animated, TouchableOpacity } from "react-native";
+import {
+  View,
+  Text,
+  Animated,
+  TouchableOpacity,
+  Vibration,
+} from "react-native";
 
 import LottieView from "lottie-react-native";
 
@@ -18,6 +24,7 @@ const Declaration = ({ navigation }) => {
   let noReactionAnimationRef = useRef();
 
   function yes() {
+    Vibration.vibrate(1000);
     yesButtonAnimationRef.current.reset();
     yesButtonAnimationRef.current.play();
     Animated.timing(yesReactionAnimation, {
@@ -54,7 +61,17 @@ const Declaration = ({ navigation }) => {
   useEffect(() => {
     setIsPlaying(true);
     setTimeout(() => {
-      declarationAnimationRef.current.play();
+      declarationAnimationRef.current?.play();
+
+      setTimeout(() => {
+        Vibration.vibrate(250);
+      }, 10000);
+
+      setTimeout(() => {
+        Vibration.vibrate([
+          0, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250,
+        ]);
+      }, 13500);
     }, 1000);
   }, []);
 
@@ -63,7 +80,9 @@ const Declaration = ({ navigation }) => {
       <LottieView
         ref={declarationAnimationRef}
         style={{
-          flex: 1,
+          // flex: 1,
+          width: "100%",
+          // height: "100%",
         }}
         loop={false}
         onAnimationFinish={() => {

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Splash from "./src/pages/Splash";
 
 import { setCustomText } from "react-native-global-props";

@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from "react";
 import {
   View,
-  Text,
+  Vibration,
   TouchableOpacity,
   StatusBar,
   Animated,
@@ -15,6 +15,7 @@ import LottieView from "lottie-react-native";
 
 import Declaration from "./src/pages/Declaration";
 import Proceed from "./src/pages/Proceed";
+import { Audio } from "expo-av";
 
 import { styles } from "./styles";
 
@@ -23,8 +24,27 @@ const RootStack = createStackNavigator();
 const Home = ({ navigation }) => {
   const [blinkingTextAnimation] = useState(new Animated.Value(0));
   let startButtonAnimationRef = useRef();
+  const [sound, setSound] = React.useState();
+
+  async function playSound() {
+    const { sound } = await Audio.Sound.createAsync(
+      require("./assets/background.mp3")
+    );
+    setSound(sound);
+
+    await sound.playAsync();
+  }
 
   useEffect(() => {
+    return sound
+      ? () => {
+          sound.unloadAsync();
+        }
+      : undefined;
+  }, [sound]);
+
+  useEffect(() => {
+    playSound();
     let toChangeValue = 1;
     setInterval(() => {
       Animated.timing(blinkingTextAnimation, {
@@ -53,6 +73,7 @@ const Home = ({ navigation }) => {
       />
       <TouchableOpacity
         onPress={() => {
+          Vibration.vibrate(1000);
           startButtonAnimationRef.current.reset();
           startButtonAnimationRef.current.play();
           setTimeout(() => {

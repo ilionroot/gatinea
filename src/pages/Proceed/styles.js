@@ -26,7 +26,7 @@ export const styles = StyleSheet.create({
   acceptButton: {
     height: 75,
     marginTop: 32,
-    marginBottom: 225,
+    marginBottom: 330,
     backgroundColor: "rgba(32,255,128, 1)",
     padding: 16,
     alignItems: "center",
